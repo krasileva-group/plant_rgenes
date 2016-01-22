@@ -40,7 +40,10 @@ We usually parse all pfam outputs of interest in parallel using `xargs`
 
 3) Identification of non-canonical NLR-ID domain combinations with K-parse_Pfam_domains_NLR-fusions-v2.2.pl
 
-This script is configured to find any parsed pfam files in specified directory or its sub-directories
+* This script is configured to find any parsed pfam files in specified directory or its sub-directories.
+* The script will parse the output of K-parse_Pfam_domains-v3.1.pl.
+* NLR proteins are identified based on the presence of NB-ARC domain.
+* Fusions are identified based on the presence of non-NBS non-LRR domains with specified evalue cutoff (default 1e-3).
 
 usage: `perl K-parse_Pfam_domains_NLR-fusions-v2.2.pl <options>`
 
@@ -51,10 +54,6 @@ usage: `perl K-parse_Pfam_domains_NLR-fusions-v2.2.pl <options>`
 `-o|--output output directory`
 
 `-d|--db_description description of datasets used in the analyses [Organism Species_ID NCBI_taxon_ID Family Database Date_aquired Restrictions Version Common_Name Source Reference] for example of this dataset see Additional file 1 in Sarris et al BMC Biology 2016`
-
-* The script will parse the output of K-parse_Pfam_domains-v3.1.pl
-* NLR proteins are identified based on the presence of NB-ARC domain. 
-* Fusions are identified based on the presence of non-NBS non-LRR domains with specified evalue cutoff (default 1e-3). 
 
 Outputs:
 
