@@ -14,9 +14,10 @@ We follow the Phytozome organisation of `master_dir/species/annotation/species_v
 Usage: bash run_pfam_scan.sh dir
 
 Dependencies:
-Markup : 1. HMMER software (http://hmmer.janelia.org/) including pfam_scan.pl (part of HMMER) Move in same directory as this script or set path at command string.
-2. Pfam database (http://pfam.xfam.org/)
-3. File names should be consistent with Phytozome and include Species_*_protein.fa
+
+* HMMER software (http://hmmer.janelia.org/) including pfam_scan.pl (part of HMMER) Move in same directory as this script or set path at command string.
+* Pfam database (http://pfam.xfam.org/)
+* File names should be consistent with Phytozome and include Species_*_protein.fa
 
 2) Parsing the pfamscan output with K-parse_Pfam_domains_v3.1.pl 
 
