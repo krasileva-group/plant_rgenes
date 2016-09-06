@@ -1,8 +1,8 @@
 plant_rgenes
 ============
 
-Set of scripts to annotate Pfam domains and extract NLR plant immune receptors and their architectures
-
+Set of scripts to annotate Pfam domains and extract NLR plant immune receptors and their architectures as published in Sarris et al BMC Biology 2016: https://bmcbiol.biomedcentral.com/articles/10.1186/s12915-016-0228-7
+ 
 Our basic pipeline
 
 0) Obtain protein sequences of species of interest and organise them into a directory. 
