@@ -1,0 +1,9 @@
+Family	Species	Domain	All_proteins	All_fusions	Proteins+domain-fusion	Proteins-domain-fusion	Proteins+domain+fusion	Proteins-domain+fusion	Fisher_Right
+Brassicaceae	Athaliana_167_TAIR10	AIG1	31210	16	34	31160	1	15	0.0177970810849125
+Brassicaceae	Athaliana_167_TAIR10	BRX	31210	16	17	31177	5	11	4.59632332194815e-13
+Brassicaceae	Athaliana_167_TAIR10	DUF3633	31210	16	8	31186	2	14	1.10614218601368e-05
+Brassicaceae	Athaliana_167_TAIR10	DUF640	31210	16	11	31183	2	14	1.91559361932825e-05
+Brassicaceae	Athaliana_167_TAIR10	LIM	31210	16	19	31175	1	15	0.0102064341181872
+Brassicaceae	Athaliana_167_TAIR10	PAH	31210	16	30	31164	3	13	5.97451365935697e-07
+Brassicaceae	Athaliana_167_TAIR10	Pkinase	31210	16	922	30272	3	13	0.0108896927025821
+Brassicaceae	Athaliana_167_TAIR10	WRKY	31210	16	85	31109	6	10	4.06796818452904e-12

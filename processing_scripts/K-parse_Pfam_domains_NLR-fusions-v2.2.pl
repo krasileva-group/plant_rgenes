@@ -169,14 +169,14 @@ foreach my $domainid (sort keys %sd_prevalence){
 	$all_proteins = $db{$speciesid}{'Total_proteins'};
 	$all_fusions = scalar keys %{$nlrsd{$speciesid}};
 
-	if (defined @{$sd_proteins{$domainid}{$speciesid}}){	
+	if (@{$sd_proteins{$domainid}{$speciesid}}){	
 
 	    $all_fusions_w_domain = uniq( sort(@{$sd_proteins{$domainid}{$speciesid}}) );
 	}
 
 	$all_fusions_wo_domain = $all_fusions - $all_fusions_w_domain;
 
-	if (defined @{$all_domains{$domainid}{$speciesid}}){
+	if (@{$all_domains{$domainid}{$speciesid}}){
 
 
 	    $all_proteins_w_domain = uniq( sort(@{$all_domains{$domainid}{$speciesid}}) );
@@ -246,7 +246,7 @@ foreach my $speciesid (sort keys (%outfile) ){
 
     my $sd_domains_out="N/A";
 	
-    if ( defined @{$sd_domains{'species'}{$speciesid}} ){
+    if (@{$sd_domains{'species'}{$speciesid}} ){
 	
 	$sd_domains_out=join(", ", uniq( sort (@{$sd_domains{'species'}{$speciesid}}) ) );
 

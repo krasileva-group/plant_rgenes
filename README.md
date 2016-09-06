@@ -18,6 +18,7 @@ Dependencies:
 * HMMER software (http://hmmer.janelia.org/) including pfam_scan.pl (part of HMMER) Move in same directory as this script or set path at command string.
 * Pfam database (http://pfam.xfam.org/)
 * File names should be consistent with Phytozome and include Species_*_protein.fa
+* perl modules specified in the scripts (best to install with cpan: http://www.cpan.org/modules/)
 
 2) Parsing the pfamscan output with K-parse_Pfam_domains_v3.1.pl 
 
@@ -42,6 +43,8 @@ We usually parse all pfam outputs of interest in parallel using `xargs`
 
 * This script is configured to find any parsed pfam files in specified directory or its sub-directories.
 * The script will parse the output of K-parse_Pfam_domains-v3.1.pl.
+* Note that in current configutation, the script will specifically scan input directories for filenames matching "*pfamscan*parsed.verbose" If your naming scheme is different, you might want to modify line 62.
+* Configuration of 'db_description' is highly important as the first check in the script is to match species_id in db_description to the one in the name of the file. If successful, the script will print species_id and family name to standard out. 
 * NLR proteins are identified based on the presence of NB-ARC domain.
 * Fusions are identified based on the presence of non-NBS non-LRR domains with specified evalue cutoff (default 1e-3).
 
@@ -65,5 +68,9 @@ Outputs:
 
 * Contingency tables (per ID domain) for each species as well as for all species and Fisher's Exact left test 
  
+
+Example datasets:
+
+The example dataset directory contains input Arabidopsis data as well as corresponding db_description file. It also contains the outputs from each stage of the analyses, so you can check your pipeline against them or test individual scripts.
 
  
