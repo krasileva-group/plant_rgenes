@@ -67,7 +67,7 @@ my %db = &read_db_description($db_description);
 my (%all_domains, %nlr, %nlrsd, %sd_domains, %sd_prevalence, %sd_proteins);
 my %outfile;
 
-open (PS, "find -L $indir -name *pfamscan*parsed.verbose |");
+open (PS, "find -L $indir -name \"*pfamscan*parsed.verbose\" |");
 
 my ($file, $basefile);
 
@@ -81,7 +81,9 @@ while ($file=<PS>){
     my ($species)=split("_pfamscan", $basefile);
     $species =~ s/.protein.fa//;
     $species =~ s/.fa//;
-    
+   
+#    unless ( defined ( $db{$species})) print $species "is not found in metadata database file\n";
+	
     if ( defined ( $db{$species} )){
 
 	my $family = $db{$species}{'Family'};
@@ -104,9 +106,6 @@ while ($file=<PS>){
 
 	    $db{$species}{'Total_proteins'}++;
 	    $nlrsd{$species};
-	    @{$sd_domains{'species'}{$species}} = '';
-	    @{$sd_domains{'family'}{$family}} = '';
-
 
 #	    print Dumper($db{$species}{'Total_proteins'});
 
@@ -118,6 +117,8 @@ while ($file=<PS>){
 
 		    my $domain=$_;
 
+#		    unless ($domain=~ m/(/) die "Looks like pfamscan file does not contain verbose information for each domain\n"; 
+			
 		    my ($domainid, $attributes)=split(/\(/, $domain);
 		    $attributes=~ s/\)//; #remove right hand bracket
 		    $attributes=~ s/\s//g;
@@ -135,10 +136,11 @@ while ($file=<PS>){
 			unless ($domainid=~ m/NB-ARC|LRR|AAA|AAA.+|TIR|RPW8/ ){ #skip known domains
 			
 			    $nlrsd{$species}{$seqid}=$domainstring; #record putative NLR-SDs
-
+			    
 			    push @{$sd_proteins{$domainid}{$species}}, $seqid; #record all sequences contianing each sd domain  
-			
+			    #print $species, "\t", $domainid, "\n";
 			    push @{$sd_domains{'species'}{$species}}, $domainid; #make a list of SDs for a species
+	#		    print Dumper(%sd_domains);
 			    push @{$sd_prevalence{$domainid}{'species'}}, $species; #make a list of all species for each domain
 			    push @{$sd_domains{'family'}{$family}}, $domainid; #make list of SDs for a family
 			    push @{$sd_prevalence{$domainid}{'family'}}, $family; #make a list of all families for each domain  
@@ -151,6 +153,18 @@ while ($file=<PS>){
 	}
 
     close $FILE1;
+	
+	unless ( defined (@{$sd_domains{'family'}{$family}}) ){
+
+	    @{$sd_domains{'family'}{$family}} = '';
+	}
+
+        unless ( defined (@{$sd_domains{'species'}{$species}}) ){
+
+	    @{$sd_domains{'species'}{$species}};
+
+	}
+
 	 }
 }
 
@@ -158,6 +172,7 @@ while ($file=<PS>){
 # Table includes following
 # Family \t Species \t Proteins+domain-fusion \t Proteins-domain-fusion \t Proteins+domain+fusion \t Proteins-domain+fusion
 
+#print Dumper(%sd_domains);
 
 open STATS1 , ">", $outdir . "/" . "nlrid_domains-" . $today . ".stats.tsv";
 
@@ -166,11 +181,11 @@ my $sep="\t";
 print STATS1 join($sep,("Family","Species", "Domain", "All_proteins","All_fusions","Proteins+domain-fusion","Proteins-domain-fusion","Proteins+domain+fusion","Proteins-domain+fusion","Fisher_Right")), "\n";
 
 foreach my $domainid (sort keys %sd_prevalence){
-
-    foreach my $speciesid (sort keys %db){
-
+    
+    foreach my $speciesid (@{$sd_prevalence{$domainid}{'species'}}){
+	
 	if (defined $db{$speciesid}{'Total_proteins'}){
-
+	   
 	    my $all_proteins = 0;
 	    my $all_fusions = 0;
 	    my $all_fusions_w_domain = 0;
@@ -182,7 +197,7 @@ foreach my $domainid (sort keys %sd_prevalence){
 	    $all_proteins = $db{$speciesid}{'Total_proteins'};
 	    $all_fusions = scalar keys %{$nlrsd{$speciesid}};
 
-	    if (@{$sd_proteins{$domainid}{$speciesid}}){	
+	    if (@{$sd_proteins{$domainid}{$speciesid}}){ #debugging	
 		
 		$all_fusions_w_domain = uniq( sort(@{$sd_proteins{$domainid}{$speciesid}}) );
 	    }
