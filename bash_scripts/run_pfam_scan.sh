@@ -21,6 +21,13 @@ NUMCORES=1
 TSTAMP=$(date +%Y%m%d-%H%M%S)
 CMDFILE=commands.${TSTAMP}.txt
 
+if ! type "pfam_scan.pl" > /dev/null; then
+    echo "ERROR: pfam_scan.pl is not installed and on \$PATH."
+    echo
+    echo "Check you can run this command at the terminal: pfam_scan.pl -h"
+    exit 1
+fi
+
 protfiles=$(find $IN_DIR -name '*protein.fa')
 for FILE in $protfiles
 do
@@ -35,7 +42,7 @@ do
 	mkdir $dirname/pfam
         echo "mkdir $dirname/pfam"
     fi
-    CMDSTR+="'time perl pfam_scan.pl -e_seq 1 -e_dom 1 -pfamB -as -outfile $dirname/pfam/${basename}_pfamscan-$(date +%m-%d-%Y).out -cpu 8 -fasta $FILE -dir $Pfam"
+    CMDSTR+="'time pfam_scan.pl -e_seq 1 -e_dom 1 -pfamB -as -outfile $dirname/pfam/${basename}_pfamscan-$(date +%m-%d-%Y).out -cpu 8 -fasta $FILE -dir $Pfam"
     CMDSTR+="'"$'\n'
 
 done
