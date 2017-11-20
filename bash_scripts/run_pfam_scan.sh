@@ -12,7 +12,8 @@
 IN_DIR="$1" 
 
 # set location of Pfam db
-Pfam=
+# By default using $HMMERDB environment variable (as used by HMMER itself)
+Pfam="$HMMERDB"
 
 # set number of jobs to run in parallel
 NUMCORES=1
@@ -21,6 +22,11 @@ NUMCORES=1
 TSTAMP=$(date +%Y%m%d-%H%M%S)
 CMDFILE=commands.${TSTAMP}.txt
 
+if [[ "$Pfam" == "" ]]; then
+    echo "ERROR: Location of Pfam HMM databases not set."
+    echo "Please set the \$HMMERDB environment variable."
+    exit 1
+fi
 if ! type "pfam_scan.pl" > /dev/null; then
     echo "ERROR: pfam_scan.pl is not installed and on \$PATH."
     echo
