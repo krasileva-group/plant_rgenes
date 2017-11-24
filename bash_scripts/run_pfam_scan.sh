@@ -49,8 +49,7 @@ do
         echo "mkdir $dirname/pfam"
     fi
 
-    CMDSTR+="'time perl pfam_scan.pl -e_seq 1 -e_dom 1 -as -outfile $dirname/pfam/${basename}_pfamscan-$(date +%m-%d-%Y).out -cpu 8 -fasta $FILE -dir $Pfam"
-
+    CMDSTR+="'time pfam_scan.pl -e_seq 1 -e_dom 1 -as -outfile $dirname/pfam/${basename}_pfamscan-$(date +%m-%d-%Y).out -cpu 8 -fasta $FILE -dir $Pfam"
     CMDSTR+="'"$'\n'
 
 done
